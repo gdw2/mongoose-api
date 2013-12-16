@@ -75,12 +75,9 @@ serveResource = (app, Model) ->
 				serveJson res, 404, message: "Resource not found."
 	
 	app.delete path, (req, res, next) ->
-		Model.findByIdAndRemove req.params.id, (error, model) ->
+		Model.remove _id:req.params.id, (error) ->
 			return next serveError res, error if error?
-			if model?
-				serveJson res, 200, message: "Resource deleted."
-			else
-				serveJson res, 404, message: "Resource not found."
+			serveJson res, 200, message: "Resource deleted."
 	
 	return
 
